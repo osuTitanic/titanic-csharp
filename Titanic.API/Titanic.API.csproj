@@ -14,6 +14,7 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/osuTitanic/titanic-csharp</PackageProjectUrl>
     <RepositoryUrl>https://github.com/osuTitanic/titanic-csharp</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>

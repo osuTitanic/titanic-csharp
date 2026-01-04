@@ -1,0 +1,61 @@
+name: Publish NuGet Package
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Package version (e.g., 1.0.0)'
+        required: true
+        default: '1.0.0'
+
+env:
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  DOTNET_NOLOGO: true
+
+jobs:
+  publish:
+    runs-on: windows-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Restore dependencies
+        run: dotnet restore Titanic.API/Titanic.API.csproj
+
+      - name: Build
+        run: dotnet build Titanic.API/Titanic.API.csproj -c Release --no-restore
+
+      - name: Determine version
+        id: version
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" == "release" ]; then
+            VERSION="${{ github.event.release.tag_name }}"
+            # Remove 'v' prefix if present
+            VERSION="${VERSION#v}"
+          else
+            VERSION="${{ github.event.inputs.version }}"
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Pack
+        run: dotnet pack Titanic.API/Titanic.API.csproj -c Release --no-build -o ./nupkg -p:PackageVersion=${{ steps.version.outputs.version }}
+
+      - name: Push to GitHub Packages
+        run: dotnet nuget push ./nupkg/*.nupkg --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --api-key ${{ secrets.GITHUB_TOKEN }} --skip-duplicate
