@@ -13,7 +13,7 @@ namespace Titanic.API.Tests
         [Fact]
         public void GetUser_ValidUserId_ReturnsUser()
         {
-            // Arrange - User ID 1 should exist (typically an admin or first user)
+            // Arrange
             var request = new GetUserRequest(1);
 
             // Act
@@ -44,7 +44,7 @@ namespace Titanic.API.Tests
         [Fact]
         public void UserLookup_ByUsername_ReturnsUser()
         {
-            // Arrange - First get a known user, then look them up by name
+            // Arrange
             var getRequest = new GetUserRequest(1);
             var user = getRequest.BlockingPerform(Api);
             
@@ -69,8 +69,7 @@ namespace Titanic.API.Tests
             var achievements = request.BlockingPerform(Api);
 
             // Assert
-            Assert.NotNull(achievements);
-            // User may or may not have achievements, but the list should not be null
+            Assert.NotNull(achievements); // User may or may not have achievements, but the list should not be null
         }
 
         [Fact]
@@ -83,8 +82,7 @@ namespace Titanic.API.Tests
             var friends = request.BlockingPerform(Api);
 
             // Assert
-            Assert.NotNull(friends);
-            // User may or may not have friends, but the list should not be null
+            Assert.NotNull(friends); // User may or may not have friends, but the list should not be null
         }
     }
 }
