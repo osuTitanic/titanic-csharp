@@ -17,7 +17,7 @@ namespace Titanic.API
         public bool IsLoggedIn => Token != null;
         public bool IsTokenExpired => Token == null || DateTime.Now > Token.ExpiresAt;
 
-        public TitanicAPI(string baseUrl)
+        public TitanicAPI(string baseUrl = "https://api.titanic.sh")
         {
             client = new WebClient();
             client.BaseAddress = baseUrl;
