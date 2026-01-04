@@ -104,9 +104,7 @@ namespace Titanic.API
 
 #if NETCOREAPP
                 StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-                HttpRequestMessage request = new HttpRequestMessage(new HttpMethod("PATCH"), baseUrl + endpoint);
-                request.Content = content;
-                HttpResponseMessage response = client.SendAsync(request).GetAwaiter().GetResult();
+                HttpResponseMessage response = client.PatchAsync(baseUrl + endpoint, content).GetAwaiter().GetResult();
                 string responseJson = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 #else
                 // WebClient does not support Patch, so we need to build the request manually
