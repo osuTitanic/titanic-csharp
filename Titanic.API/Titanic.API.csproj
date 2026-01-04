@@ -5,6 +5,15 @@
     <AssemblyName>Titanic.API</AssemblyName>
     <LangVersion>12.0</LangVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+
+    <!-- NuGet Package Properties -->
+    <PackageId>Titanic.API</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Levi (Lekuru)</Authors>
+    <Description>API wrapper for osu.titanic.sh</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/osuTitanic/titanic-csharp</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/osuTitanic/titanic-csharp</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
