@@ -16,4 +16,10 @@ namespace Titanic.API.Models
         [JsonProperty("status")]
         public int Status { get; set; }
     }
+
+    public class RelationshipResponse
+    {
+        [JsonProperty("status")]
+        public string Status { get; set; }
+    }
 }
