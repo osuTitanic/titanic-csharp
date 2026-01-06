@@ -3,7 +3,7 @@
 C# libraries for [Titanic!](https://osu.titanic.sh)
 
 > [!CAUTION]
-> These libraries use deprecated `WebClient` intentionally to maintain compatibility with older .NET Framework versions and modded osu! clients. They are **not** recommended for modern C# applications.
+> These libraries use deprecated `WebClient` & `HttpClient` intentionally to maintain compatibility with older .NET Framework versions and modded osu! clients. They are **not** recommended for modern C# applications.
 
 ## Packages
 
