@@ -13,3 +13,6 @@
 /dataSources.local.xml
 # Editor-based HTTP Client requests
 /httpRequests/
+# Discord RPC settings
+discord.xml
+.name
