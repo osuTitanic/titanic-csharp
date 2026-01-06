@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Net;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Titanic.API.Http;
@@ -11,7 +9,7 @@ using Titanic.API.Requests;
 
 namespace Titanic.API
 {
-    public class TitanicAPI
+    public class TitanicAPI : IDisposable
     {
 #pragma warning disable CA1859
         private readonly IHttpInterface _http;
@@ -108,6 +106,12 @@ namespace Titanic.API
             RefreshTokenRequest request = new(Token.RefreshToken);
             request.BlockingPerform(this);
             Debug.Print("TitanicAPI: Access token refreshed (EnsureValidAccessToken)");
+        }
+
+        public void Dispose()
+        {
+            this._http.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }

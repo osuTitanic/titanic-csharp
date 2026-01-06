@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net20;net35;net40;net48;net8.0;net9.0;net10.0</TargetFrameworks>
+        <TargetFrameworks>net20;net35;net40;net45;net48;net8.0;net9.0;net10.0</TargetFrameworks>
         <ImplicitUsings>false</ImplicitUsings>
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
@@ -39,6 +39,10 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Titanic.API\Titanic.API.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Extensions\" />
     </ItemGroup>
 
 </Project>
