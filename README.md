@@ -1,6 +1,6 @@
 # Titanic.API
 
-A C# API wrapper for [osu!titanic](https://osu.titanic.sh).
+A C# API wrapper for [Titanic!](https://osu.titanic.sh)
 
 > [!CAUTION]
 > This library uses the deprecated `WebClient` class intentionally to maintain compatibility with older .NET Framework versions and modded osu! clients. It is **not** recommended for modern C# applications.
@@ -29,4 +29,7 @@ new GetUserRequest(1).Perform(api,
     onSuccess: user => Console.WriteLine(user.Name),
     onError: ex => Console.WriteLine(ex.Message)
 );
+
+// Further documentation can be found here:
+// https://api.titanic.sh/docs
 ```
