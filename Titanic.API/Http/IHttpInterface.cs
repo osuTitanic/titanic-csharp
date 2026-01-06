@@ -1,4 +1,7 @@
-﻿namespace Titanic.Updater.Http;
+﻿using System;
+using System.Collections.Generic;
+
+namespace Titanic.API.Http;
 
 public interface IHttpInterface : IDisposable
 {

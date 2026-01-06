@@ -1,15 +1,16 @@
 using System.Linq;
 using System.Reflection;
 using ICSharpCode.SharpZipLib.Zip;
-using Titanic.Updater.Http;
-using Titanic.Updater.Models;
+using Titanic.API;
+using Titanic.API.Models;
+using Titanic.API.Requests;
 using Titanic.Updater.Versioning;
 
 namespace Titanic.Updater;
 
 public class UpdateManager : IDisposable
 {
-    private readonly TitanicApiClient _api = new();
+    private readonly TitanicAPI _api = new();
     private readonly UpdateManagerSettings _settings;
 
     public UpdateManager(UpdateManagerSettings settings)
@@ -28,9 +29,11 @@ public class UpdateManager : IDisposable
         }
     }
 
-    public ModdedReleaseEntry? CheckUpdateForClient(ModdedClientInformation clientInfo)
+    public ModdedReleaseEntryModel? CheckUpdateForClient(ModdedClientInformation clientInfo)
     {
-        IEnumerable<ModdedReleaseEntry> entries = this._api.GetModdedReleaseEntries(clientInfo.ClientIdentifier)
+        GetModdedReleaseEntriesRequest request = new(clientInfo.ClientIdentifier);
+        
+        IEnumerable<ModdedReleaseEntryModel> entries = request.BlockingPerform(this._api)
             .OrderByDescending(e => e.Id);
         
         if (clientInfo.InstalledStream != null)
@@ -40,7 +43,7 @@ public class UpdateManager : IDisposable
             return entries.FirstOrDefault();
 
         OsuVersion currentVersion = OsuVersion.Parse(clientInfo.InstalledVersion, clientInfo.VersionKind);
-        foreach (ModdedReleaseEntry entry in entries)
+        foreach (ModdedReleaseEntryModel entry in entries)
         {
             OsuVersion version = OsuVersion.Parse(entry.Version, clientInfo.VersionKind);
             if (currentVersion.IsOlderThan(version))
@@ -50,7 +53,7 @@ public class UpdateManager : IDisposable
         return null;
     }
 
-    public DownloadedUpdate DownloadClientUpdate(ModdedClientInformation info, ModdedReleaseEntry entry)
+    public DownloadedUpdate DownloadClientUpdate(ModdedClientInformation info, ModdedReleaseEntryModel entry)
     {
         if (!entry.IsExtractable)
             throw new Exception("Update is not extractable (not a .zip), check entry.IsExtractable and prompt the user to open the entry.DownloadUrl instead or repackage your updates");
@@ -130,7 +133,7 @@ public class UpdateManager : IDisposable
         Environment.ProcessPath;
 #else
         Assembly.GetEntryAssembly().Location;
-    #endif
+#endif
 
     public void Dispose()
     {

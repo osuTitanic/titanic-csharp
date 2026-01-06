@@ -1,7 +1,11 @@
 #if SUPPORT_HTTPCLIENT
+using System;
+using System.Collections.Generic;
 using System.Net.Http;
 
-namespace Titanic.Updater.Http;
+namespace Titanic.API.Http;
+
+#nullable enable
 
 public class HttpClientInterface : IHttpInterface
 {
@@ -21,6 +25,13 @@ public class HttpClientInterface : IHttpInterface
         {
             HttpMethodType.GET => HttpMethod.Get,
             HttpMethodType.POST => HttpMethod.Post,
+            HttpMethodType.PUT => HttpMethod.Put,
+            #if NET5_0_OR_GREATER
+            HttpMethodType.PATCH => HttpMethod.Patch,
+            #else
+            HttpMethodType.PATCH => new HttpMethod("PATCH"),
+            #endif
+            HttpMethodType.DELETE => HttpMethod.Delete,
             _ => throw new ArgumentOutOfRangeException(nameof(methodType), methodType, null)
         };
 
