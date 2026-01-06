@@ -41,8 +41,4 @@
       <ProjectReference Include="..\Titanic.API\Titanic.API.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Extensions\" />
-    </ItemGroup>
-
 </Project>
