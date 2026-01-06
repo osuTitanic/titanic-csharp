@@ -133,7 +133,7 @@ public class UpdateManager : IDisposable
         Environment.ProcessPath;
 #else
         Assembly.GetEntryAssembly().Location;
-    #endif
+#endif
 
     public void Dispose()
     {
