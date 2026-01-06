@@ -1,19 +1,27 @@
-# Titanic.API
+# titanic-csharp
 
-A C# API wrapper for [Titanic!](https://osu.titanic.sh)
+C# libraries for [Titanic!](https://osu.titanic.sh)
 
 > [!CAUTION]
-> This library uses the deprecated `WebClient` class intentionally to maintain compatibility with older .NET Framework versions and modded osu! clients. It is **not** recommended for modern C# applications.
+> These libraries use deprecated `WebClient` intentionally to maintain compatibility with older .NET Framework versions and modded osu! clients. They are **not** recommended for modern C# applications.
+
+## Packages
+
+| Package           | Description                             |
+|-------------------|-----------------------------------------|
+| `Titanic.API`     | API wrapper for Titanic!                |
+| `Titanic.Updater` | Updater library for modded osu! clients |
 
 ## Installation
 
-Add the NuGet package or reference the project directly:
+Add the NuGet packages or reference the projects directly:
 
 ```
 dotnet add package Titanic.API
+dotnet add package Titanic.Updater
 ```
 
-## Usage
+## Titanic.API Usage
 
 ```csharp
 using Titanic.API;
@@ -32,4 +40,43 @@ new GetUserRequest(1).Perform(api,
 
 // Further documentation can be found here:
 // https://api.titanic.sh/docs
+```
+
+## Titanic.Updater Usage
+
+```csharp
+using Titanic.Updater;
+using Titanic.Updater.Models;
+using Titanic.Updater.Versioning;
+
+UpdateManagerSettings settings = new()
+{
+    Exit = () => Console.WriteLine("Exit called!"),
+    ReplaceCurrentExecutable = false,
+    IncludeClientIdentifierInOutputPath = true,
+};
+
+var clientInfo = new ModdedClientInformation
+{
+    ClientIdentifier = "my-client",
+    VersionKind = OsuVersionKind.BuildNumber,
+    InstalledVersion = "b20130815",
+    InstalledStream = "stable"
+};
+
+UpdateManager manager = new(settings);
+ModdedReleaseEntry? update = manager.CheckUpdateForClient(client);
+
+if (update != null)
+{
+    if (!update.IsExtractable)
+    {
+        Console.WriteLine($"Update found: {update.Version}, but not extractable");
+        return;
+    }
+    Console.WriteLine($"Update found: {update.Version}");
+    DownloadedUpdate downloadedUpdate = manager.DownloadClientUpdate(client, update);
+    Console.WriteLine($"Update downloaded to {downloadedUpdate.Path}");
+    manager.InstallClientUpdate(downloadedUpdate);
+}
 ```
