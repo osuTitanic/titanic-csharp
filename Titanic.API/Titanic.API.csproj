@@ -8,7 +8,7 @@
 
     <!-- NuGet Package Properties -->
     <PackageId>Titanic.API</PackageId>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <Authors>Levi (Lekuru)</Authors>
     <Description>API wrapper for osu.titanic.sh</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
