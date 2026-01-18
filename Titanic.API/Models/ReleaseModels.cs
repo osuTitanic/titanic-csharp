@@ -154,7 +154,7 @@ namespace Titanic.API.Models
         [JsonProperty("update_url")]
         public string UpdateUrl { get; set; }
         
-        [JsonProperty("postId")]
+        [JsonProperty("post_id")]
         public int? PostId { get; set; }
 
         [JsonProperty("changelog")]
