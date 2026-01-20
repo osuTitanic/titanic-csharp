@@ -15,6 +15,9 @@ namespace Titanic.API
         private readonly IHttpInterface _http;
 #pragma warning restore CA1859
 
+        private string userAgent => $"Titanic.API/{packageVersion}";
+        private string packageVersion => typeof(TitanicAPI).Assembly.GetName().Version?.ToString() ?? "Unknown";
+
         public TokenModel Token
         {
             get;
@@ -33,6 +36,7 @@ namespace Titanic.API
         public TitanicAPI(string baseUrl = "https://api.titanic.sh")
         {
             this._http = HttpInterfaceFactory.Create(baseUrl);
+            this._http.AddDefaultHeader("User-Agent", userAgent);
         }
         
         private static readonly JsonSerializerSettings _settings = new()
