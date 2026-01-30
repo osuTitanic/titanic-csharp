@@ -5,6 +5,7 @@
     <AssemblyName>Titanic.API</AssemblyName>
     <LangVersion>14</LangVersion>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <IsTrimmable>true</IsTrimmable>
 
     <!-- NuGet Package Properties -->
     <PackageId>Titanic.API</PackageId>
