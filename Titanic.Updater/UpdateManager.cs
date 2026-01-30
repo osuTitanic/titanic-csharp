@@ -18,7 +18,13 @@ public class UpdateManager : IDisposable
         this._settings = settings;
 
         if (settings.SharpZipLibCodePage != null)
+        {
+#if !NET45_OR_GREATER && !NET8_0_OR_GREATER
             ZipConstants.DefaultCodePage = settings.SharpZipLibCodePage.Value;
+#elif !NET8_0_OR_GREATER
+            ZipStrings.CodePage = settings.SharpZipLibCodePage.Value;
+#endif
+        }
 
         // Clean up old the executable we made if we just updated
         if (this._settings.ReplaceCurrentExecutable)
