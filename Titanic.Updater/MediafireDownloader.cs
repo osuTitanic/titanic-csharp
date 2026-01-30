@@ -26,6 +26,11 @@ public class MediaFireDownloader
 
             if (string.IsNullOrEmpty(downloadUrl))
                 return null;
+            
+            #if !NET8_0_OR_GREATER // old cs compilers think the above null check isn't enough for some reason
+            if (downloadUrl == null)
+                return null;
+            #endif
 
             string? filename = ExtractFileName(pageContent);
             return new DownloadItem(downloadUrl, filename);

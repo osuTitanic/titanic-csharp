@@ -141,7 +141,7 @@ public class UpdateManager : IDisposable
 
     private static string ExecutablePath =>
 #if NET10_0_OR_GREATER
-        Environment.ProcessPath;
+        Environment.ProcessPath!;
 #else
         Assembly.GetEntryAssembly()!.Location;
 #endif

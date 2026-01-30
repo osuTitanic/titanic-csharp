@@ -28,6 +28,11 @@
         </ItemGroup>
     </Target>
     
+    <PropertyGroup>
+        <!-- old SharpZipLib has vulns and there isn't much we can do about it-->
+        <NoWarn>NU1902;NU1903</NoWarn>
+    </PropertyGroup>
+    
     <ItemGroup Condition="'$(TargetFramework)' == 'net20'">
         <PackageReference Include="LINQlone" Version="1.1.0" />
     </ItemGroup>
