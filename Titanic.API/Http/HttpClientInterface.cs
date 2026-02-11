@@ -50,11 +50,7 @@ public class HttpClientInterface : IHttpInterface
             request.Content = new StringContent(content, Encoding.UTF8, "application/json");
         }
 
-        #if NET5_0_OR_GREATER
-        HttpResponseMessage response = this._client.Send(request);
-        #else
         HttpResponseMessage response = this._client.SendAsync(request).Result;
-        #endif
         response.EnsureSuccessStatusCode();
 
         return response;
