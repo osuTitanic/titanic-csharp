@@ -88,7 +88,7 @@ namespace Titanic.CDN
         {
             Debug.Print("TitanicCDN: GET " + endpoint);
             string str = this._http.RequestString(HttpMethodType.GET, endpoint, null, headers);
-            
+
             T? obj = JsonConvert.DeserializeObject<T>(str, _settings);
             if (obj == null)
                 throw new Exception("Response had null content");
@@ -131,7 +131,33 @@ namespace Titanic.CDN
             Debug.Print("TitanicCDN: PUT " + endpoint);
             byte[] bytes = this._http.RequestBytes(HttpMethodType.PUT, endpoint, data, headers);
             string str = Encoding.UTF8.GetString(bytes);
-            
+
+            T? obj = JsonConvert.DeserializeObject<T>(str, _settings);
+            if (obj == null)
+                throw new Exception("Response had null content");
+
+            return obj;
+        }
+
+#if NET8_0_OR_GREATER
+        [UnconditionalSuppressMessage(
+            "Trimming",
+            "IL2026",
+            Justification = "The appropriate code is marked as untrimmed."
+        )]
+#endif
+        public T Post
+#if NET8_0_OR_GREATER
+            <[DynamicallyAccessedMembers(types)] T>
+#else
+            <T>
+#endif
+            (string endpoint, Dictionary<string, string>? headers = null)
+        {
+            Debug.Print("TitanicCDN: POST " + endpoint);
+            byte[] bytes = this._http.RequestBytes(HttpMethodType.POST, endpoint, (string?)null, headers);
+            string str = Encoding.UTF8.GetString(bytes);
+
             T? obj = JsonConvert.DeserializeObject<T>(str, _settings);
             if (obj == null)
                 throw new Exception("Response had null content");
