@@ -11,10 +11,16 @@ namespace Titanic.API.Models
         public string Resolution { get; set; }
 
         [JsonProperty("fullscreen")]
-        public bool Fullscreen { get; set; }
+        public bool? Fullscreen { get; set; }
 
         [JsonProperty("letterboxing")]
-        public bool Letterboxing { get; set; }
+        public bool? Letterboxing { get; set; }
+
+        [JsonProperty("dotnet_version")]
+        public string DotNetVersion { get; set; }
+
+        [JsonProperty("client_architecture")]
+        public string ClientArchitecture { get; set; }
 
         [JsonProperty("dotnet_version")]
         public string DotNetVersion { get; set; }
