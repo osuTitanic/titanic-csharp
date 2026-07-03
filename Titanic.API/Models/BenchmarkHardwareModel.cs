@@ -7,6 +7,15 @@ namespace Titanic.API.Models
         [JsonProperty("renderer")]
         public string Renderer { get; set; }
 
+        [JsonProperty("resolution")]
+        public string Resolution { get; set; }
+
+        [JsonProperty("fullscreen")]
+        public bool Fullscreen { get; set; }
+
+        [JsonProperty("letterboxing")]
+        public bool Letterboxing { get; set; }
+
         [JsonProperty("cpu")]
         public string CPU { get; set; }
 
