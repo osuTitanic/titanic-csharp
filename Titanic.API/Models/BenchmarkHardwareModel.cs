@@ -16,6 +16,12 @@ namespace Titanic.API.Models
         [JsonProperty("letterboxing")]
         public bool Letterboxing { get; set; }
 
+        [JsonProperty("dotnet_version")]
+        public string DotNetVersion { get; set; }
+
+        [JsonProperty("client_architecture")]
+        public string ClientArchitecture { get; set; }
+
         [JsonProperty("cpu")]
         public string CPU { get; set; }
 
