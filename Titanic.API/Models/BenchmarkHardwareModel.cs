@@ -22,12 +22,6 @@ namespace Titanic.API.Models
         [JsonProperty("client_architecture")]
         public string ClientArchitecture { get; set; }
 
-        [JsonProperty("dotnet_version")]
-        public string DotNetVersion { get; set; }
-
-        [JsonProperty("client_architecture")]
-        public string ClientArchitecture { get; set; }
-
         [JsonProperty("cpu")]
         public string CPU { get; set; }
 
