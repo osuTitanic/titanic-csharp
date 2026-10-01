@@ -18,7 +18,7 @@
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
 
-        <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);CopyProjectReferencesToPackage</TargetsForTfmSpecificBuildOutput>
+        <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);IncludeVendoredSharpZipLibInPackage</TargetsForTfmSpecificBuildOutput>
     </PropertyGroup>
 
     <ItemGroup>
@@ -46,13 +46,13 @@
         <PackageReference Include="SharpZipLib" Version="1.4.2" />
     </ItemGroup>
 
-    <Target DependsOnTargets="ResolveReferences" Name="CopyProjectReferencesToPackage">
+    <Target Name="IncludeVendoredSharpZipLibInPackage"
+            Condition="'$(TargetFramework)' == 'net20' or '$(TargetFramework)' == 'net35' or '$(TargetFramework)' == 'net40' or '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net48'">
         <ItemGroup>
-            <BuildOutputInPackage Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('ReferenceSourceTarget', 'ProjectReference'))" />
-
-            <_EditedSharpZipLib Include="@(ReferenceCopyLocalPaths-&gt;WithMetadataValue('Filename', 'Titanic.ICSharpCode.SharpZipLib'))"
-                                      Condition="'$(TargetFramework)' == 'net20' or '$(TargetFramework)' == 'net35' or '$(TargetFramework)' == 'net40' or '$(TargetFramework)' == 'net45' or '$(TargetFramework)' == 'net48'" />
-            <BuildOutputInPackage Include="@(_EditedSharpZipLib)" />
+            <BuildOutputInPackage Include="$(VendoredSharpZipLibPath)">
+                <FinalOutputPath>$(VendoredSharpZipLibPath)</FinalOutputPath>
+                <TargetPath>Titanic.ICSharpCode.SharpZipLib.dll</TargetPath>
+            </BuildOutputInPackage>
         </ItemGroup>
     </Target>
 
