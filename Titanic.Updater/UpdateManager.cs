@@ -208,7 +208,7 @@ public class UpdateManager : IDisposable
             PatchUpdateApplier.MoveFileAndReplace(file, dest, this._settings.ReplaceCurrentExecutable ? ExecutablePath : null);
         }
 
-        SetLinuxExecutableBit(outputDir);
+        SetUnixExecutableBit(outputDir);
 
         this._settings.Exit?.Invoke();
     }
@@ -229,7 +229,7 @@ public class UpdateManager : IDisposable
         {
             PatchUpdateApplier applier = new(this._settings, outputDir, staging, ExecutablePath, this._api.Download);
             applier.Apply(update.Parts);
-            SetLinuxExecutableBit(outputDir);
+            SetUnixExecutableBit(outputDir);
             this._settings.Exit?.Invoke();
         }
         catch (Exception ex)
@@ -275,11 +275,11 @@ public class UpdateManager : IDisposable
         return outputDir;
     }
 
-    private static void SetLinuxExecutableBit(string outputDir)
+    private static void SetUnixExecutableBit(string outputDir)
     {
 #if NET10_0_OR_GREATER
         string osuExecutable = Path.Combine(outputDir, "osu!");
-        if (OperatingSystem.IsLinux() && File.Exists(osuExecutable))
+        if ((OperatingSystem.IsLinux() || OperatingSystem.IsMacOS()) && File.Exists(osuExecutable))
         {
             UnixFileMode fileMode = File.GetUnixFileMode(osuExecutable);
             fileMode |= UnixFileMode.GroupExecute | UnixFileMode.OtherExecute | UnixFileMode.UserExecute;
