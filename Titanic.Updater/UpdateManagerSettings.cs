@@ -32,6 +32,8 @@ public class UpdateManagerSettings
 
     /// <summary>
     /// The path we should install updates to. Should be left blank if this is an osu! client.
+    /// Defaults to the executable's directory for self-updates, or the current working
+    /// directory when ReplaceCurrentExecutable is disabled.
     /// </summary>
     public string OutputPath = string.Empty;
 

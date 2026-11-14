@@ -266,6 +266,9 @@ public class UpdateManager : IDisposable
     private string GetOutputDirectory(string clientIdentifier)
     {
         string outputDir = _settings.OutputPath;
+        if (string.IsNullOrEmpty(outputDir) && _settings.ReplaceCurrentExecutable)
+            outputDir = Path.GetDirectoryName(ExecutablePath) ?? string.Empty;
+
         if (string.IsNullOrEmpty(outputDir))
             outputDir = Environment.CurrentDirectory;
 
