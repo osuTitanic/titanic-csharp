@@ -18,7 +18,8 @@ public class WebClientInterface : IHttpInterface
     {
         this._client = new WebClient
         {
-            BaseAddress = baseAddress
+            BaseAddress = baseAddress,
+            Encoding = Encoding.UTF8
         };
     }
 
