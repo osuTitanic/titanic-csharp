@@ -20,6 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v6
       - name: Setup .NET
@@ -49,7 +50,12 @@ jobs:
         run: dotnet pack -c Release /p:Version=${{ steps.version.outputs.version }} --no-restore --no-build -o ./nupkg
       - name: List packages
         run: ls -lAh nupkg
+      - name: NuGet login
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}
       - name: Upload Package
-        run: find ./nupkg -name "*.nupkg" -exec dotnet nuget push {} --source https://api.nuget.org/v3/index.json --api-key ${NUGET_TOKEN} --skip-duplicate \;
+        run: dotnet nuget push "./nupkg/*.nupkg" --source https://api.nuget.org/v3/index.json --api-key "$NUGET_TOKEN" --skip-duplicate
         env:
-          NUGET_TOKEN: ${{ secrets.NUGET_TOKEN }}
+          NUGET_TOKEN: ${{ steps.login.outputs.NUGET_API_KEY }}
